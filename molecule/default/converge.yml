@@ -5,3 +5,5 @@
     - name: "Include ansible-role-pulumi"
       include_role:
         name: "ansible-role-pulumi"
+      vars:
+        pulumi_version: "{{ pulumi_version.pulumi_version }}"
