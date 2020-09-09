@@ -1,0 +1,30 @@
+---
+# tasks file for install Pulumi on Linux system
+
+- name: Linux | Find the latest version of Pulumi
+  uri:
+    url: https://www.pulumi.com/latest-version
+    return_content: yes
+  register: pulumi_latest_version
+  when: pulumi_version == 'latest'
+
+- name: Linux | Define Pulumi version to install
+  set_fact:
+    pulumi_version_to_install: "{{ (pulumi_version == 'latest') | ternary(pulumi_latest_version.content, pulumi_version) }}"
+
+# This task avoids downloading Pulumi every time
+- name: Linux | Check if Pulumi is present with the right version
+  command: "{{ pulumi_path }}/pulumi version"
+  register: pulumi_installed_version
+  ignore_errors: yes
+  changed_when: false
+  failed_when: false
+
+- name: Linux | Install Pulumi
+  unarchive:
+    src: "https://get.pulumi.com/releases/sdk/pulumi-v{{ pulumi_version_to_install }}-linux-x64.tar.gz"
+    dest: "{{ pulumi_path }}"
+    extra_opts: [--strip-components=1]
+    mode: '0755'
+    remote_src: yes
+  when: pulumi_version_to_install not in pulumi_installed_version.stdout | default('')

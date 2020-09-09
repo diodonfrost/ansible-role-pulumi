@@ -1,2 +1,7 @@
 ---
 # tasks file for ansible-role-pulumi
+- name: Include OS specific variables.
+  include_vars: "{{ ansible_system }}.yml"
+
+- name: Install Pulumi
+  include_tasks: "setup-{{ ansible_system }}.yml"

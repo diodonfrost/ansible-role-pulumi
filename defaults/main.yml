@@ -1,2 +1,10 @@
 ---
 # defaults file for ansible-role-pulumi
+
+# Define Pulumi version to install
+# Default: latest (https://www.pulumi.com/latest-version)
+pulumi_version: "latest"
+
+# Define where to install Pulumi binary
+# Default: use local system path defined in Ansible vars/*.yml
+pulumi_path: "{{ pulumi_default_path }}"
