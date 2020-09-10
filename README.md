@@ -1,38 +1,150 @@
-Role Name
-=========
+# ansible-role-pulumi
 
-A brief description of the role goes here.
+[![Build Status](https://travis-ci.com/diodonfrost/ansible-role-pulumi.svg?branch=master)](https://travis-ci.com/diodonfrost/ansible-role-pulumi)
+[![molecule](https://github.com/diodonfrost/ansible-role-pulumi/workflows/molecule/badge.svg)](https://github.com/diodonfrost/ansible-role-pulumi/actions)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-diodonfrost.pulumi-660198.svg)](https://galaxy.ansible.com/diodonfrost/pulumi)
 
-Requirements
-------------
+This role provide a compliance for install pulumi on your target host.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+This role was developed using Ansible 2.8 Backwards compatibility is not guaranteed.
+Use `ansible-galaxy install diodonfrost.pulumi` to install the role on your system.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Supported platforms:
 
-Dependencies
-------------
+```yaml
+- name: EL
+  versions:
+    - 8
+    - 7
+    - 6
+- name: Fedora
+  versions:
+    - 32
+    - 31
+    - 30
+    - 29
+    - 28
+    - 27
+    - 26
+- name: Debian
+  versions:
+    - buster
+    - stretch
+    - jessie
+- name: Ubuntu
+  versions:
+    - focal
+    - bionic
+    - xenial
+    - trusty
+- name: Amazon
+  versions:
+    - Candidate
+    - 2017.12
+    - 2016.03
+- name: opensuse
+  versions:
+    - any
+- name: ArchLinux
+  versions:
+    - any
+- name: Alpine
+  versions:
+    - any
+- name: Gentoo
+  versions:
+    - any
+- name: ClearLinux
+  versions:
+    - any
+```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+## Role Variables
 
-Example Playbook
-----------------
+This role has multiple variables. The defaults for all these variables are the following:
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+---
+# defaults file for ansible-role-pulumi
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+# Define Pulumi version to install
+# Default: latest (https://www.pulumi.com/latest-version)
+pulumi_version: "latest"
 
-License
--------
+# Define where to install Pulumi binary
+# Default: use local system path defined in Ansible vars/*.yml
+pulumi_path: "{{ pulumi_default_path }}"
+```
 
-BSD
+## Dependencies
 
-Author Information
-------------------
+None
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Example Playbook
+
+This is a sample playbook file for deploying the Ansible Galaxy pulumi role in a localhost and installing the latest version of pulumi.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - role: diodonfrost.pulumi
+```
+
+This role can also install a specific version of pulumi.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - role: ansible-role-pulumi
+      vars:
+        pulumi_version: 2.5.0
+```
+
+## Local Testing
+
+This project uses [Molecule](http://molecule.readthedocs.io/) to aid in the
+development and testing.
+
+To develop or test you'll need to have installed the following:
+
+* Linux (e.g. [Ubuntu](http://www.ubuntu.com/))
+* [Docker](https://www.docker.com/)
+* [Python](https://www.python.org/) (including python-pip)
+* [Ansible](https://www.ansible.com/)
+* [Molecule](http://molecule.readthedocs.io/)
+
+### Testing with Docker
+
+```shell
+# Test ansible role with centos-8
+distribution=centos-8 molecule test
+
+# Test ansible role with ubuntu-20.04
+distribution=ubuntu-20.04 molecule test
+
+# Test ansible role with alpine-rolling
+distribution=alpine-rolling molecule test
+
+# Create centos-7 instance
+distribution=centos-7 molecule create
+
+# Apply role on centos-7 instance
+distribution=centos-7 molecule converge
+
+# Launch tests on centos-7 instance
+distribution=centos-7 molecule verify
+```
+
+## License
+
+Apache 2
+
+## Author Information
+
+This role was created in 2020 by diodonfrost.
