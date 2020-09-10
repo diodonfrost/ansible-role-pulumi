@@ -59,6 +59,10 @@ Supported platforms:
 - name: ClearLinux
   versions:
     - any
+- name: Windows
+  versions:
+    - 2016
+    - 2012R2
 ```
 
 ## Role Variables
@@ -118,6 +122,8 @@ To develop or test you'll need to have installed the following:
 * [Python](https://www.python.org/) (including python-pip)
 * [Ansible](https://www.ansible.com/)
 * [Molecule](http://molecule.readthedocs.io/)
+* [Virtualbox](https://www.virtualbox.org/) (if you test windows system)
+* [Vagrant](https://www.vagrantup.com/downloads.html) (if you test windows system)
 
 ### Testing with Docker
 
@@ -139,6 +145,13 @@ distribution=centos-7 molecule converge
 
 # Launch tests on centos-7 instance
 distribution=centos-7 molecule verify
+```
+
+### Testing with Virtualbox
+
+```shell
+# Test ansible role with Windows
+molecule test -s windows
 ```
 
 ## License

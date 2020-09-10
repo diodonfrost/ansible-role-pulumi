@@ -53,6 +53,11 @@ galaxy_info:
     - name: ClearLinux
       versions:
         - any
+    - name: Windows
+      versions:
+        - 2016
+        - 2012R2
+
   galaxy_tags:
     - system
     - packaging
