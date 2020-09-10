@@ -1,0 +1,42 @@
+---
+# tasks file for install Pulumi on Windows system
+
+- name: Windows | Find the latest version of Pulumi
+  win_uri:
+    url: https://www.pulumi.com/latest-version
+    return_content: yes
+  register: pulumi_latest_version
+  when: pulumi_version == 'latest'
+
+- name: Windows | Define Pulumi version to install
+  set_fact:
+    pulumi_version_to_install: "{{ (pulumi_version == 'latest') | ternary(pulumi_latest_version.content, pulumi_version) }}"
+
+# This task avoids downloading Pulumi every time
+- name: Windows | Check if Pulumi is present with the right version
+  win_command: '{{ pulumi_path }}Pulumi\bin\pulumi version'
+  register: pulumi_installed_version
+  ignore_errors: yes
+  changed_when: false
+  failed_when: false
+
+- name: Windows | Download pulumi
+  win_get_url:
+    url: https://get.pulumi.com/releases/sdk/pulumi-v{{ pulumi_version_to_install }}-windows-x64.zip
+    dest: '%TEMP%\pulumi-v{{ pulumi_version_to_install }}-windows-x64.zip'
+  when: pulumi_version_to_install not in pulumi_installed_version.stdout | default('empty')
+
+- name: Windows | Create pulumi folder
+  win_file:
+    path: "{{ pulumi_path }}"
+    state: directory
+
+- name: Windows | Install Pulumi
+  win_unzip:
+    src: '%TEMP%\pulumi-v{{ pulumi_version_to_install }}-windows-x64.zip'
+    dest: "{{ pulumi_path }}"
+  when: pulumi_version_to_install not in pulumi_installed_version.stdout | default('empty')
+
+- name: Windows | Add pulumi to PATH
+  win_path:
+    elements: '{{ pulumi_path }}Pulumi\bin\'
