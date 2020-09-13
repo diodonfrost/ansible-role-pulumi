@@ -103,12 +103,6 @@ env:
     pulumi_version: 2.7.0
   - distribution: ubuntu-16.04
     pulumi_version: 2.5.0
-  - distribution: ubuntu-14.04
-    pulumi_version: latest
-  - distribution: ubuntu-14.04
-    pulumi_version: 2.7.0
-  - distribution: ubuntu-14.04
-    pulumi_version: 2.5.0
 
 #--------------------------------
 #
