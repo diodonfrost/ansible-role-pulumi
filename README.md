@@ -1,6 +1,5 @@
 # ansible-role-pulumi
 
-[![Build Status](https://travis-ci.com/diodonfrost/ansible-role-pulumi.svg?branch=master)](https://travis-ci.com/diodonfrost/ansible-role-pulumi)
 [![molecule](https://github.com/diodonfrost/ansible-role-pulumi/workflows/molecule/badge.svg)](https://github.com/diodonfrost/ansible-role-pulumi/actions)
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-diodonfrost.pulumi-660198.svg)](https://galaxy.ansible.com/diodonfrost/pulumi)
 
