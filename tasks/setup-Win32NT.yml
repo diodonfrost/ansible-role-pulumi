@@ -6,6 +6,7 @@
     url: https://www.pulumi.com/latest-version
     return_content: yes
   register: pulumi_latest_version
+  check_mode: no
   when: pulumi_version == 'latest'
 
 - name: Windows | Define Pulumi version to install
