@@ -1,0 +1,22 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Linux | Pulumi should be functionnal
+      command: pulumi version
+      register: pulumi_result
+
+    - name: Linux | Verify commands outputs
+      assert:
+        that:
+          - pulumi_result.rc == 0
+        success_msg: "All tests passed"
+      when: ansible_env.pulumi_version == "latest"
+
+    - name: Linux | Verify commands outputs
+      assert:
+        that:
+          - pulumi_result.rc == 0
+          - ansible_env.pulumi_version in pulumi_result.stdout
+        success_msg: "All tests passed"
+      when: ansible_env.pulumi_version != "latest"

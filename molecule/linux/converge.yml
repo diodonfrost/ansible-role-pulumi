@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  tasks:
+    - name: "Include ansible-role-pulumi"
+      include_role:
+        name: "ansible-role-pulumi"
+      vars:
+        pulumi_version: "{{ ansible_env.pulumi_version }}"
