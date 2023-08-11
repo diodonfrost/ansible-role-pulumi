@@ -7,4 +7,4 @@
       include_role:
         name: "ansible-role-pulumi"
       vars:
-        pulumi_version: "{{ ansible_env.pulumi_version }}"
+        pulumi_version: "{{ lookup('env', 'pulumi_version') | default('latest', true) }}"

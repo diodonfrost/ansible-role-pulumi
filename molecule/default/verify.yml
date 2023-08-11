@@ -2,6 +2,10 @@
 - name: Verify
   hosts: all
   tasks:
+    - name: Linux | Get Pulumi version argument
+      set_fact:
+        pulumi_version: "{{ lookup('env', 'pulumi_version') | default('latest', true) }}"
+  
     - name: Linux | Pulumi should be functionnal
       command: pulumi version
       register: pulumi_result
@@ -11,12 +15,12 @@
         that:
           - pulumi_result.rc == 0
         success_msg: "All tests passed"
-      when: ansible_env.pulumi_version == "latest"
+      when: pulumi_version == "latest"
 
     - name: Linux | Verify commands outputs
       assert:
         that:
           - pulumi_result.rc == 0
-          - ansible_env.pulumi_version in pulumi_result.stdout
+          - pulumi_version in pulumi_result.stdout
         success_msg: "All tests passed"
-      when: ansible_env.pulumi_version != "latest"
+      when: pulumi_version != "latest"

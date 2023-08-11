@@ -16,8 +16,6 @@ platforms:
     cgroupns_mode: host
     privileged: yes
     pre_build_image: yes
-    env:
-      pulumi_version: "${pulumi_version:-latest}"
 provisioner:
   name: ansible
 verifier:
